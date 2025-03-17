@@ -3,63 +3,388 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Portfolio</title>
+    <title>Portfolios by Chris</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f5f5f7;
         }
         header {
-            background: #333;
+            background: black;
+            color: white;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 15px 50px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            margin-right: 50px;
+        }
+        header nav {
+            display: flex;
+            gap: 20px;
+        }
+        header nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+        header nav a:hover {
+            color: #aaa;
+        }
+        .hero {
+            background: url('https://www.mrisoftware.com/au/wp-content/uploads/2021/10/Suffolk-University-Website-Image.png') no-repeat center center/cover;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: black;
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-top: 100px;
+            opacity: 0;
+            transition: opacity 1s ease-out;
+        }
+        .hero.show {
+            opacity: 1;
+        }
+        .section {
+            padding: 100px 20px;
+            text-align: center;
+            background: white;
+            margin: 20px auto;
+            width: 80%;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .section.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .about {
+            background: url('https://media.ceros.com/suffolk-university/images/2022/03/30/c5c58e0d747ce4a501db59c05e67c77a/20150630-bostonaerialflight-mjc-737-edit-1440x900.jpg') no-repeat center center/cover;
+            background-size: cover;
+            color: white;
+        }
+        .education {
+            background: url('https://www.appily.com/sites/default/files/styles/max_1200/public/images/hero/college/168005_hero.jpg?itok=llLQqIEF') no-repeat center center/cover;
+            background-size: cover;
+        }
+        .experience {
+            background: url('https://media.ceros.com/suffolk-university/images/2022/03/30/c5c58e0d747ce4a501db59c05e67c77a/20150630-bostonaerialflight-mjc-737-edit-1440x900.jpg') no-repeat center center/cover;
+            background-size: cover;
+            color: white;
+        }
+        .contact {
+            background: url('https://t4.ftcdn.net/jpg/05/04/78/25/360_F_504782581_LHwsDbXlrFiiadWC4i15yV2lhbJnB8g0.jpg') no-repeat center center/cover;
+            background-size: cover;
+        }
+        footer {
+            background: #003366;
             color: white;
             text-align: center;
-            padding: 1rem;
+            padding: 40px 20px;
+            margin-top: 40px;
+            font-size: 14px;
         }
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            background: white;
+        .footer-content {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .footer-section {
+            margin: 10px;
+            min-width: 200px;
+        }
+        .footer-section h3 {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .footer-section p, .footer-section a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+        }
+        .downloads {
+            background-color: #f0f0f0;
+            padding: 40px 20px;
+            background: url('https://img.freepik.com/free-vector/ripped-notes-rectangle-frame-background_53876-99423.jpg') no-repeat center center/cover;
+        }
+        .downloads h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .downloads ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .downloads li {
+            margin-bottom: 15px;
+        }
+        .downloads a {
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+        .downloads a:hover {
+            color: #0056b3;
+        }
+        .file-content {
+            display: none;
+            background-color: #fff;
             padding: 20px;
-            border-radius: 5px;
+            margin-top: 20px;
+            border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
-        h2 {
-            color: #333;
+        .file-content.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
         }
-        .portfolio-item {
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #ccc;
-            background: #fff;
-        }
+         /* Enhanced style for document content */
+    .file-content {
+        display: none;
+        background-color: #ffffff;
+        padding: 30px;
+        margin-top: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        line-height: 1.6;
+        font-size: 1rem;
+        color: #333;
+    }
+    .file-content.show {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .file-content h3 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        color: #003366;
+        text-transform: uppercase;
+    }
+    .file-content p {
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+        line-height: 1.8;
+    }
+    .file-content a {
+        color: #007BFF;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    .file-content a:hover {
+        color: #0056b3;
+    }
+    .file-content ul {
+        padding-left: 20px;
+    }
+    .file-content ul li {
+        margin-bottom: 10px;
+    }
+</style>
     </style>
 </head>
 <body>
     <header>
-        <h1>My Digital Portfolio</h1>
+        <h1>Portfolios by Chris</h1>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#education">Education</a>
+            <a href="#experience">Experience</a>
+            <a href="#contact">Contact</a>
+            <a href="#downloads">Downloads</a>
+        </nav>
     </header>
-    <div class="container">
-        <h2>About This Portfolio</h2>
-        <p>This portfolio showcases my academic growth throughout the INTO Suffolk Integrated Master’s Program.</p>
+    <div class="hero">
+        <p></p>
+    </div>
+    <!-- Downloads Section -->
+    <div class="section downloads" id="downloads">
+        <h2>AE052 Documents</h2>
+        <ul>
+            <li><a href="javascript:void(0);" onclick="showFileContent(1)">Writing in class 1</a></li>
+            <li><a href="javascript:void(0);" onclick="showFileContent(2)">APA style</a></li>
+            <li><a href="javascript:void(0);" onclick="showFileContent(3)">Explore Degree</a></li>
+        </ul>
+
+        <!-- Hidden content sections -->
+        <div class="file-content" id="file-content-1">
+            <h3>Writing in class 1</h3>
+            <p>“Make lots of friends, overcome cultural barriers, and learn from them”—that’s what my father told me at the airport before I boarded my flight to the US. So, let’s see who I am before you decide to be friends with me.</p>
         
-        <h2>AE052 Reflection</h2>
-        <p>[Insert your 150-word reflection here]</p>
+            <p>My full name is Tran Minh Chien, but you can call me Chris. I’m from Da Nang City, Vietnam. I graduated from Da Nang University of Science and Technology with a major in Electronics and Telecommunications, studying there from 2016 to 2022.</p>
+            
+            <p>It’s a difficult major; we had to study both hardware and software, along with a bit of deep learning and AI. During this time, I wasn’t focused on studying, so my grades were quite poor.</p>
+            
+            <p>But in my final year at university, I was lucky to find my first job, right in the middle of the COVID-19 outbreak.</p>
         
-        <h2>Selected Works from AE052</h2>
-        <div class="portfolio-item">
-            <h3>Critical Analysis Essay</h3>
-            <p><a href="#">View Essay</a></p>
+            <p>My job was to teach programming and everything related to it. It was quite a challenging job for someone as new as me. I had to stand in front of a crowd to teach classes, correct assignments, and explain detail to them, even though at that time, I didn’t have any real experience working on an actual project.</p>
+        
+            <p>But luckily, I adapted very well. I shared everything I knew with my students, and it seemed like they appreciated it.</p>
+        
+            <p>It’s quite funny that two of my former university classmates becoming my students here.</p>
+        
+            <p>After nearly two years, I wanted to work on larger projects and learn from real-world experience, so I decided to leave and look for a new job. I interviewed at a few companies and was lucky enough to get offers from all of them. This time, I chose a Japanese tech company. I got this job after going through three interview rounds that lasted a total of six hours.</p>
         </div>
-        <div class="portfolio-item">
-            <h3>Exploring Your Degree Professional Memo</h3>
-            <p><a href="#">View Memo</a></p>
+        
+        <div class="file-content" id="file-content-2">
+            <h3>Cross-Cultural Tips for International Students: Communication</h3>
+            <p>Cross-Cultural Tips for International Students: Communication
+
+                Student: Chris
+                Institutional Affiliation: Suffolk University 
+                Course: AE052 Graduate Academic Success
+                Instructor: Dr. Rachel Toncelli
+                Date: 03/03/2025
+                
+                
+                Hu (2018) gives helpful advice to international students on how to communicate better in a new cultural environtment, especially in Western education. The article talks about the differences between direct and indirect communication and encourages students to be flexible when talking to professors and classmates. It also highlights the important of listening, understanding body language, and being aware of cultural differences.
+                Additionally, Hu (2018) suggests that students ask if they don’t understand something and be patient as they improve their communication skills. By practicing and being open-minded, international students can adapt more easily, build relationships, and have a better experience studying abroad.
+                
+                
+                References
+                Hu, D. (2018, August 3). Cross-cultural tips for international students: Communication. LinkedIn. https://www.linkedin.com/pulse/navigate-cross-cultural-map-communication-di-hu/
+                
+                </p>
         </div>
-        <div class="portfolio-item">
-            <h3>Reflective Essay</h3>
-            <p><a href="#">View Essay</a></p>
+        <div class="file-content" id="file-content-3">
+            <h3>Explore Degree</h3>
+            <p>To: Dr. Rachel Toncelli, INTO Suffolk, Suffolk University
+                From: Minh Chien Tran
+                Date: 02/02/2025
+                Subject: Exploration of Master’s in Business Analytics
+                Introduction: After 4 years of working as a software developer, I realized that being technically skilled is not enough. I needed something more to reach a higher position in my career, so I chose to study Business Analytics at Suffolk. My decision to pursue a Master’s in Business Analytics stems from my desire to bridge the gap between technology and business strategy. This memo outlines the expectations of my graduate program, its approach to learning, and my personal goals as a graduate student.
+                Knowledge and Skills Required for Success: To do well in this program, students need to build skills in: 
+                -	Data Analysis 
+                -	Statistical & Machine Learning Techniques
+                -	Business Acumen
+                -	Critical Thinking & Problem-Solving
+                -	Communication & Collaboration
+                Program's Approach to Learning: The Master’s in Business Analytics program takes a hands-on, cross-disciplinary approach, covering:
+                -	Experiential Learning
+                -	Case-Based Learning
+                -	Mentorship & Networking
+                Personal Goals as a Graduate Student: 
+                -	Specific: Gain expertise in data analytics and business intelligence to move into a data-driven decision-making role.
+                -	Measurable: Complete three key projects that showcase your analytical abilities and insights. Build a profile to be able to apply to major companies in the industry.
+                -	Achievable: Participate in workshops and earn certifications in essential analytics tools.
+                -	Relevant: Choose coursework and projects that match my career goals in data analytics and business strategy.
+                -	Time-bound: Secure an internship or industry collaboration within the next year to gain hands-on experience.
+                Conclusion
+                The Master’s in Business Analytics program offers a solid foundation in data-driven decision-making, providing me with the key skills needed for my professional development.
+                Best regards,
+                Chris
+                jmt11076@su.suffolk.edu
+                
+                </p>
         </div>
     </div>
+    <div class="section about" id="about">
+        <h2>About</h2>
+        <p>Introduction about yourself and personal goals.</p>
+    </div>
+    <div class="section education" id="education">
+        <h2>Education</h2>
+        <p>Information about academic background and degrees obtained.</p>
+    </div>
+    <div class="section experience" id="experience">
+        <h2>Experience</h2>
+        <p>Details about work experience and projects participated in.</p>
+    </div>
+    <div class="section contact" id="contact">
+        <h2>Contact</h2>
+        <p>Personal contact information, email, phone number.</p>
+    </div>
+
+    
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Information</h3>
+                <p>Suffolk University</p>
+                <p>Minh Chien Tran</p>
+                <p>Email: <a href="mailto:chientm98@gmail.com">chientm98@gmail.com</a></p>
+                <p>Phone: 865-221-4639</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#about">About</a>
+                <a href="#education">Education</a>
+                <a href="#experience">Experience</a>
+                <a href="#contact">Contact</a>
+                <a href="#downloads">Downloads</a>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Me</h3>
+                <a href="#">LinkedIn</a>
+                <a href="#">GitHub</a>
+            </div>
+        </div>
+        <p>&copy; 2025 Inspired by Chris. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Function to toggle file content visibility
+        function showFileContent(fileId) {
+            const fileContent = document.getElementById('file-content-' + fileId);
+
+            // Toggle the visibility of the file content
+            if (fileContent.classList.contains('show')) {
+                // If it's already visible, hide it
+                fileContent.classList.remove('show');
+            } else {
+                // Otherwise, show the content
+                fileContent.classList.add('show');
+            }
+        }
+
+        const sections = document.querySelectorAll('.section');
+        const hero = document.querySelector('.hero');
+
+        const animateOnScroll = () => {
+            const scrollPosition = window.scrollY + window.innerHeight;
+
+            sections.forEach((section) => {
+                if (scrollPosition > section.offsetTop + 100) {
+                    section.classList.add('show');
+                }
+            });
+
+            if (scrollPosition > hero.offsetTop + 100) {
+                hero.classList.add('show');
+            }
+        };
+
+        window.addEventListener('scroll', animateOnScroll);
+        animateOnScroll();
+    </script>
 </body>
 </html>
